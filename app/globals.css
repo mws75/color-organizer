@@ -1,0 +1,574 @@
+/* ============================================================
+   Color Palette Organizer — "sticker sheet" design system
+   Paper background, 2px ink outlines, offset cartoon shadows,
+   big radii everywhere. Pastel chips do the talking.
+   ============================================================ */
+
+:root {
+  --paper: #fffdf8;
+  --ink: #35322f;
+  --ink-soft: rgba(53, 50, 47, 0.55);
+  --card: #ffffff;
+
+  --mint: #c9efd5;
+  --blush: #ffd4d4;
+  --butter: #ffeaa9;
+  --sky: #cfe5ff;
+  --lilac: #e6dbff;
+
+  --candy-rose: #e8618c;
+  --candy-orange: #f2913d;
+  --candy-gold: #d9a514;
+  --candy-green: #57bb8a;
+  --candy-blue: #5b8def;
+
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 12px;
+
+  --shadow-rest: 4px 5px 0 rgba(53, 50, 47, 0.12);
+  --pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(91, 141, 239, 0.07) 1.5px, transparent 1.5px),
+    radial-gradient(rgba(232, 97, 140, 0.06) 1.5px, transparent 1.5px);
+  background-size: 56px 56px;
+  background-position:
+    0 0,
+    28px 28px;
+  color: var(--ink);
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), "Segoe UI", sans-serif;
+  font-weight: 600;
+  margin: 0;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 5rem;
+}
+
+/* ---------- Page header ---------- */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.25rem;
+}
+
+.page-title {
+  font-size: clamp(1.7rem, 4.5vw, 2.4rem);
+  letter-spacing: 0.01em;
+}
+
+/* Candy lettering — used on the word "Color" in the title */
+.candy-0 { color: var(--candy-rose); }
+.candy-1 { color: var(--candy-orange); }
+.candy-2 { color: var(--candy-gold); }
+.candy-3 { color: var(--candy-green); }
+.candy-4 { color: var(--candy-blue); }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  font-family: var(--font-display), "Segoe UI", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 1.05rem;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition:
+    transform 0.15s var(--pop),
+    box-shadow 0.15s var(--pop),
+    background-color 0.15s ease;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--sky);
+  outline-offset: 2px;
+}
+
+.btn-mint { background: var(--mint); }
+.btn-blush { background: var(--blush); }
+.btn-butter { background: var(--butter); }
+.btn-lilac { background: var(--lilac); }
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* Small round icon buttons (remove palette, remove color row, add row) */
+.icon-btn {
+  width: 2.1rem;
+  height: 2.1rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.15rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* ---------- Palette cards (main page) ---------- */
+
+.palette-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.palette-card {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-lg);
+  padding: 0.9rem 1.1rem;
+  box-shadow: var(--shadow-rest);
+}
+
+.swatch-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  padding: 0.55rem 0.65rem;
+  background: var(--paper);
+}
+
+.palette-name {
+  font-family: var(--font-display), "Segoe UI", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.palette-name:hover {
+  background: var(--butter);
+}
+
+.palette-name:focus-visible {
+  outline: 3px solid var(--sky);
+  outline-offset: 2px;
+}
+
+.palette-card .spacer {
+  flex: 1;
+}
+
+/* ---------- Color swatches + hover bubble ---------- */
+
+.swatch {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s var(--pop);
+}
+
+.swatch:hover,
+.swatch:focus-visible {
+  transform: translateY(-4px) rotate(-4deg);
+  z-index: 5;
+}
+
+.swatch:focus-visible {
+  outline: 3px solid var(--sky);
+  outline-offset: 2px;
+}
+
+.swatch-tip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  box-shadow: 2px 2px 0 var(--ink);
+  padding: 0.45rem 0.65rem;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  text-align: left;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.swatch-tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-5px) rotate(45deg);
+  width: 9px;
+  height: 9px;
+  background: var(--card);
+  border-right: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+
+.swatch:hover .swatch-tip,
+.swatch:focus-visible .swatch-tip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.swatch-tip .tip-name {
+  font-weight: 700;
+}
+
+.swatch-tip .tip-code {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  color: var(--ink-soft);
+}
+
+/* ---------- Generate file dropdown ---------- */
+
+.menu-wrap {
+  position: relative;
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 175px;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  box-shadow: 3px 4px 0 var(--ink);
+  padding: 0.35rem;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.menu-item {
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 9px;
+  padding: 0.45rem 0.6rem;
+  cursor: pointer;
+}
+
+.menu-item:hover,
+.menu-item:focus-visible {
+  background: var(--sky);
+}
+
+/* ---------- Overlay (create / edit palette) ---------- */
+
+.overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(53, 50, 47, 0.45);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 4.5rem 1rem 2rem;
+  overflow-y: auto;
+  z-index: 100;
+  animation: fade-in 0.15s ease;
+}
+
+.overlay-card {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-lg);
+  box-shadow: 6px 7px 0 var(--ink);
+  width: 100%;
+  max-width: 560px;
+  padding: 1.5rem 1.5rem 1.35rem;
+  animation: pop-in 0.22s var(--pop);
+}
+
+.overlay-title {
+  font-size: 1.35rem;
+  margin-bottom: 1.1rem;
+}
+
+.field-label {
+  display: block;
+  font-family: var(--font-display), "Segoe UI", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+.input {
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.7rem;
+  width: 100%;
+}
+
+.input:focus-visible {
+  outline: 3px solid var(--sky);
+  outline-offset: 1px;
+}
+
+.input-hex {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  width: 7.5rem;
+}
+
+.color-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 1rem 0 0.4rem;
+}
+
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.color-row .input-name {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Native color picker disguised as a chip */
+.picker-chip {
+  position: relative;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.picker-chip input[type="color"] {
+  position: absolute;
+  inset: -25%;
+  width: 150%;
+  height: 150%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.picker-chip:focus-within {
+  outline: 3px solid var(--sky);
+  outline-offset: 2px;
+}
+
+.row-count {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin: 0.35rem 0 0;
+}
+
+.form-error {
+  background: var(--blush);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-top: 0.85rem;
+}
+
+.overlay-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.35rem;
+}
+
+/* ---------- Toast ---------- */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  background: var(--mint);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  box-shadow: 3px 4px 0 var(--ink);
+  padding: 0.6rem 1.1rem;
+  font-family: var(--font-display), "Segoe UI", sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  z-index: 200;
+  animation: toast-up 0.25s var(--pop);
+}
+
+/* ---------- Empty / loading / signed-out states ---------- */
+
+.state-card {
+  background: var(--card);
+  border: 2px dashed var(--ink);
+  border-radius: var(--radius-lg);
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.state-card p {
+  margin: 0.4rem 0 1.25rem;
+  color: var(--ink-soft);
+}
+
+.demo-chips {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.demo-chip {
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+}
+
+.loading-chips .demo-chip {
+  animation: chip-bounce 1s infinite var(--pop);
+}
+
+.loading-chips .demo-chip:nth-child(2) { animation-delay: 0.12s; }
+.loading-chips .demo-chip:nth-child(3) { animation-delay: 0.24s; }
+.loading-chips .demo-chip:nth-child(4) { animation-delay: 0.36s; }
+
+/* ---------- Animations ---------- */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes toast-up {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes chip-bounce {
+  0%, 100% { transform: translateY(0); }
+  35% { transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 560px) {
+  .palette-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .palette-card .spacer {
+    display: none;
+  }
+
+  .overlay-backdrop {
+    padding-top: 2rem;
+  }
+}
