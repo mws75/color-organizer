@@ -221,7 +221,6 @@ h3 {
   position: relative;
   width: 44px;
   height: 44px;
-  border: 2px solid var(--ink);
   border-radius: var(--radius-sm);
   padding: 0;
   cursor: pointer;
